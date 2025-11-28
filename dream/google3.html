@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>StyleRack</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color:#E6E6FA;
+            margin: 0;
+            padding: 0;
+        }
+        #loginPage {
+            width: 330px;
+            margin: 120px auto;
+            background: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: 12px;
+
+            box-shadow: 0 0 12px gray;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 12px 0;
+            border-radius: 5px;
+            border: 1px solid gray;
+        }
+
+        button {
+            background: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+       
+        #mainPage {
+            display: none;
+            padding: 20px;
+            background-color: #FFDAB9; 
+        }
+
+        h1, h2, h3 {
+            text-align: center;
+        }
+
+        table {
+            margin: auto;
+            border-spacing: 20px;
+        }
+
+        figure {
+            width: 180px;
+            background: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 7px gray;
+        }
+
+        img {
+            width: 100%;
+            height: 200px;
+            border-radius: 5px;
+        }
+
+        figcaption {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+
+        article {
+            width: 330px;
+            margin: 30px auto;
+            background: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 7px gray;
+        }
+
+       
+        #paymentPage {
+            display: none;
+            padding: 20px;
+            background-color: lavender;
+        }
+
+        #payBox {
+            width: 350px;
+            background: white;
+            padding: 20px;
+            margin: auto;
+            border-radius: 12px;
+            box-shadow: 0 0 10px gray;
+        }
+        #thankYouPage {
+            display: none;
+            text-align: center;
+            padding: 150px 20px;
+            font-size: 28px;
+            color: purple;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ================= LOGIN PAGE =================-->
+<div id="loginPage">
+    <h2>Login to StyleRack</h2>
+
+    <input type="text" id="user" placeholder="Enter Username">
+    <input type="password" id="pass" placeholder="Enter Password">
+
+    <button onclick="login()">Login</button>
+
+    <p id="error" style="color:red;"></p>
+</div>
+
+
+<!-- ================= MAIN PAGE =================-->
+<div id="mainPage">
+
+    <h1>🛍️ StyleRack – Clothing Showcase</h1>
+
+    <table>
+        <tr>
+            <td>
+                <figure>
+                    <img src="C:\Users\balak\OneDrive\Pictures\Screenshots\casualshirt.jpg">
+                    <figcaption>Casual Shirt – ₹500</figcaption>
+                    <button onclick="add('Casual Shirt', 500)">Add</button>
+                </figure>
+            </td>
+
+            <td>
+                <figure>
+                    <img src="C:\Users\balak\OneDrive\Pictures\Screenshots\bluejean.webp">
+                    <figcaption>Blue Jeans – ₹900</figcaption>
+                    <button onclick="add('Blue Jeans', 900)">Add</button>
+                </figure>
+            </td>
+
+            <td>
+                <figure>
+                    <img src="C:\Users\balak\OneDrive\Pictures\Screenshots\jacket.jpg">
+                    <figcaption>Jacket – ₹1500</figcaption>
+                    <button onclick="add('Jacket', 1500)">Add</button>
+                </figure>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <figure>
+                    <img src="C:\Users\balak\OneDrive\Pictures\Screenshots\skirt.avif">
+                    <figcaption>Skirt – ₹900</figcaption>
+                    <button onclick="add('Skirt', 900)">Add</button>
+                </figure>
+            </td>
+
+            <td>
+                <figure>
+                    <img src="C:\Users\balak\OneDrive\Pictures\Screenshots\maxi.webp">
+                    <figcaption>Maxi – ₹1500</figcaption>
+                    <button onclick="add('Maxi', 1500)">Add</button>
+                </figure>
+            </td>
+        </tr>
+    </table>
+
+    <article>
+        <h2>🛒 Your Cart</h2>
+        <p id="items">No items added</p>
+        <h3 id="total">Total: ₹0</h3>
+
+        <button onclick="proceed()" style="background: green; margin-top: 10px;">Proceed →</button>
+    </article>
+</div>
+
+
+<div id="paymentPage">
+    <h1>💳 Payment Page</h1>
+
+    <div id="payBox">
+        <h3>Total Amount: <span id="finalAmount">₹0</span></h3>
+
+        <input type="text" placeholder="Full Name"><br>
+        <input type="text" placeholder="Card Number (xxxx-xxxx-xxxx-xxxx)"><br>
+        <input type="password" placeholder="CVV"><br>
+        <input type="month"><br><br>
+
+        <button onclick="payNow()" style="background: purple; width: 100%;">Pay</button>
+    </div>
+</div>
+
+
+
+<div id="thankYouPage">
+    <h1>🎉 THANK YOU FOR SHOPPING! 🎉</h1>
+    <p>Your payment was successful.</p>
+</div>
+
+
+
+<script>
+    function login() {
+        let u = document.getElementById("user").value;
+        let p = document.getElementById("pass").value;
+
+        if (u === "admin" && p === "1234") {
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("mainPage").style.display = "block";
+        } else {
+            document.getElementById("error").innerHTML = "Invalid username or password!";
+        }
+    }
+
+    let list = [];
+    let sum = 0;
+
+    function add(name, price) {
+        list.push(name + " - ₹" + price);
+        sum += price;
+
+        document.getElementById("items").innerHTML = list.join("<br>");
+        document.getElementById("total").innerHTML = "Total: ₹" + sum;
+    }
+
+    function proceed() {
+        document.getElementById("mainPage").style.display = "none";
+        document.getElementById("paymentPage").style.display = "block";
+        document.getElementById("finalAmount").innerText = "₹" + sum;
+    }
+
+    function payNow() {
+        document.getElementById("paymentPage").style.display = "none";
+        document.getElementById("thankYouPage").style.display = "block";
+    }
+</script>
+
+</body>
+</html>
+
